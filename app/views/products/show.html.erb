@@ -18,22 +18,14 @@
   }
 </style>
 
-Welcome, <%= @current_user&.name %>
 <span style="float: right;">
-  <%= link_to "View Cart", to: cart_path %>
+  <%= link_to "View Cart", cart_path %>
 </span>
 
+<%= turbo_frame_tag "product-#{@product.sku}" do %>
+  <%= render partial: "product", locals: { product: @product } %>
+<% end %>
 
-<h1>Products</h1>
-<h2><%= @product.name %></h2>
-<%= @product.inventory %> in stock
-<p>
-  <% if @product.inventory.positive? %>
-    <%= form_with url: add_cart_path, data: {turbo: false} do |form| %>
-      <%= hidden_field_tag "product_sku", @product.sku %>
-      <button style="margin-top: 20px;">Add to Cart</button>
-    <% end %>
-  <% else %>
-      <button style="margin-top: 20px;" disabled>Out of Stock</button>
-  <% end %>
-</p>
+<script>
+  window.productSku = '<%= @product.sku %>';
+</script>

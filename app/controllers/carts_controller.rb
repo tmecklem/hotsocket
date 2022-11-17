@@ -11,6 +11,7 @@ class CartsController < ApplicationController
 
     if product.update(inventory: product.inventory - 1)
       @cart.cart_items << CartItem.new(cart: @cart, product: product)
+      ProductChannel.inventory_changed(product)
     else
       raise "No inventory!"
     end
@@ -26,6 +27,7 @@ class CartsController < ApplicationController
     cart_item.destroy
 
     product.update(inventory: product.inventory + 1)
+    ProductChannel.inventory_changed(product)
 
     redirect_to cart_path
   end

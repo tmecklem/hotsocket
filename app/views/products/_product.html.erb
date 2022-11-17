@@ -1,22 +1,12 @@
-<div id="<%= dom_id product %>">
-  <p>
-    <strong>Sku:</strong>
-    <%= product.sku %>
-  </p>
-
-  <p>
-    <strong>Name:</strong>
-    <%= product.name %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= product.description %>
-  </p>
-
-  <p>
-    <strong>Inventory:</strong>
-    <%= product.inventory %>
-  </p>
-
-</div>
+<h2><%= product.name %></h2>
+<%= product.inventory %> in stock
+<p>
+  <% if product.inventory.positive? %>
+    <%= form_with url: "/cart/add", data: {turbo: false} do |form| %>
+      <%= hidden_field_tag "product_sku", product.sku %>
+      <button style="margin-top: 20px;">Add to Cart</button>
+    <% end %>
+  <% else %>
+      <button style="margin-top: 20px;" disabled>Out of Stock</button>
+  <% end %>
+</p>
