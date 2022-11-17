@@ -1,10 +1,39 @@
-<p style="color: green"><%= notice %></p>
+<style>
+  button {
+    background-color: #6042BC;
+    border: 0;
+  }
 
-<%= render @product %>
+  h1 {
+    margin-top: 15px;
+  }
 
-<div>
-  <%= link_to "Edit this product", edit_product_path(@product) %> |
-  <%= link_to "Back to products", products_path %>
+  h2 {
+  margin-bottom: 0;
+  }
 
-  <%= button_to "Destroy this product", @product, method: :delete %>
-</div>
+  ul {
+  list-style-type: none;
+  margin-top: 20px;
+  }
+</style>
+
+Welcome, <%= @current_user&.name %>
+<span style="float: right;">
+  <%= link_to "View Cart", to: cart_path %>
+</span>
+
+
+<h1>Products</h1>
+<h2><%= @product.name %></h2>
+<%= @product.inventory %> in stock
+<p>
+  <% if @product.inventory.positive? %>
+    <%= form_with url: add_cart_path, data: {turbo: false} do |form| %>
+      <%= hidden_field_tag "product_sku", @product.sku %>
+      <button style="margin-top: 20px;">Add to Cart</button>
+    <% end %>
+  <% else %>
+      <button style="margin-top: 20px;" disabled>Out of Stock</button>
+  <% end %>
+</p>

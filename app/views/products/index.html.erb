@@ -4,7 +4,7 @@
   <% @products.each do |product| %>
     <%= render product %>
     <p>
-      <%= link_to "Show this product", product %>
+      <%= link_to "Show this product", product_path(product.sku) %>
     </p>
   <% end %>
 </div>

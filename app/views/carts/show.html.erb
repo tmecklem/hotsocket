@@ -1,0 +1,38 @@
+<style>
+  button {
+    background-color: #6042BC;
+    border: 0;
+  }
+
+  h1 {
+    margin-top: 15px;
+  }
+
+  h2 {
+  margin-bottom: 0;
+  }
+
+  ul {
+  list-style-type: none;
+  margin-top: 20px;
+  }
+
+</style>
+
+<h1>Cart</h1>
+<ul>
+  <% @cart.cart_items.each do |item| %>
+    <li>
+      <%= item.product.name %> (<%= item.product.sku %>) <%= form_with url: remove_cart_path, data: {turbo: false} do |form| %>
+        <%= hidden_field_tag "cart_item_id", item.id %>
+        <button style="background-color: transparent; color: #F90B66;">X Remove</button>
+      <% end %>
+    </li>
+  <% end %>
+
+  <% if @cart.cart_items.blank? %>
+    There's nothing here. check out a <%= link_to Product.first.name, product_path(Product.first.sku) %>
+  <% else %>
+    <button>Checkout!</button>
+  <% end %>
+</ul>
