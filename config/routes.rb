@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     post "/add", to: "carts#add"
     post "/remove", to: "carts#remove"
   end
+  resources :users
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
